@@ -41,3 +41,7 @@ bench/parity/_fix_*.py
 bench/parity/_patch*.py
 bench/parity/_insert_names.py
 bench/parity/_repair_names.py
+
+# Development scratch (kept out of the published tree)
+/logs/
+bench/parity/_dbg*.py

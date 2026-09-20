@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Drop development scratch from the index and add it to .gitignore.
+"""Untrack development scratch that the ignore rules did not catch in time.
 
-The first `git add -A` ran before the ignore rules existed, so scratch files were
-committed and published. This removes them from the index (keeping them on disk)
-and makes sure the rules that prevent a repeat are in place.
+Rules added to .gitignore after a file is tracked do nothing, so this both adds
+the missing rules and removes the paths from the index (files stay on disk).
 """
 from __future__ import annotations
 
@@ -11,44 +10,65 @@ import pathlib
 import subprocess
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-SCRATCH = [
-    ".blk.sh", ".blk2.sh", ".cs.sh", ".hier.sh", ".map.sh", ".surv.sh",
-    ".tags.sh", ".tags2.sh", ".trees.txt", ".tags",
+
+RULES = [
+    ("/logs/", "server logs"),
+    ("bench/parity/_fix_*.py", "one-shot edit scripts"),
+    ("bench/parity/_patch*.py", "one-shot edit scripts"),
+    ("bench/parity/_insert_names.py", "one-shot edit scripts"),
+    ("bench/parity/_repair_names.py", "one-shot edit scripts"),
+    ("bench/parity/_dbg*.py", "one-shot debug scripts"),
+    ("/.*.sh", "local scratch helpers"),
+    ("/.tags/", "local tag dump"),
+    ("/.trees.txt", "local scratch dump"),
 ]
-IGNORES = """
-# Local scratch: helpers pointing at a local decompiled source tree
-/.*.sh
-/.tags/
-/.trees.txt
-
-# Server logs
-/logs/
-
-# One-shot edit scripts from development sessions
-bench/parity/_fix_*.py
-bench/parity/_patch*.py
-bench/parity/_insert_names.py
-bench/parity/_repair_names.py
-"""
 
 
 def main() -> int:
     gi = ROOT / ".gitignore"
     text = gi.read_text()
-    if "Local scratch" not in text:
-        gi.write_text(text.rstrip() + "\n" + IGNORES)
-        print("gitignore: scratch rules added")
+    added = []
+    for rule, why in RULES:
+        if rule not in text:
+            added.append(rule)
+    if added:
+        text = text.rstrip() + "\n\n# Development scratch (kept out of the published tree)\n"
+        text += "\n".join(added) + "\n"
+        gi.write_text(text)
+        print(f"gitignore: added {added}")
 
-    # tracked scratch (and logs) out of the index, files stay on disk
     tracked = subprocess.run(
         ["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, check=True
     ).stdout.split()
-    drop = [p for p in tracked if p in SCRATCH or p.startswith(".tags/") or p.startswith("logs/")]
+    drop = []
+    for path in tracked:
+        if path.startswith("logs/"):
+            drop.append(path)
+            continue
+        name = pathlib.Path(path).name
+        if path.startswith("bench/parity/") and (
+            name.startswith("_fix_")
+            or name.startswith("_patch")
+            or name.startswith("_dbg")
+            or name in ("_insert_names.py", "_repair_names.py")
+        ):
+            drop.append(path)
+        elif path.startswith(".") and path.endswith(".sh"):
+            drop.append(path)
     if drop:
         subprocess.run(["git", "rm", "-r", "--cached", "-q", *drop], cwd=ROOT, check=True)
-        print(f"untracked {len(drop)} scratch path(s): {drop[:4]}{'...' if len(drop) > 4 else ''}")
+        print(f"untracked {len(drop)} path(s), e.g. {drop[:3]}")
     else:
-        print("no tracked scratch paths")
+        print("nothing to untrack")
+
+    # what is left, by top-level area
+    left = subprocess.run(
+        ["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, check=True
+    ).stdout.split()
+    areas: dict[str, int] = {}
+    for path in left:
+        areas[path.split("/")[0]] = areas.get(path.split("/")[0], 0) + 1
+    print("tracked by area:", dict(sorted(areas.items(), key=lambda kv: -kv[1])))
     return 0
 
 
