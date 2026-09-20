@@ -77,6 +77,15 @@ Both modes produce identical checksums (16647010 and 1065330270). See
 [`bench/WORLD.md`](bench/WORLD.md#gpu) for the toolchain, the WSL2 caveat and the
 per-chunk normalisation.
 
+## Bend vs C
+
+The server is Bend; the generator is C, reached through one
+`import "./vanilla_gen.c"` in `src/world.bend`. `scripts/language_audit.py` prints
+the split: Bend 1 068 lines (2.6 % of the tree), C 13 630 plus 9 366 lines of
+headers, Python/Shell tooling 8 144, JSON data 7 826. `bench/BEND.md` records what
+moving the generator into Bend would take, measured against bend 2.0.5's type
+system.
+
 ## Status
 
 Early. What works today:
@@ -158,6 +167,7 @@ src/net.bend                 Bytes.recv / Bytes.send (foreign C+JS)
 src/server.bend              accept loop, connection state machine
 src/main.bend                entry
 bench/WORLD.md               parity method, numbers, the 1024-chunk comparison, GPU
+bench/BEND.md                what a Bend (rather than C) generator would take
 bench/parity/                vanilla reference generation, block-level comparison, probes
 LAWS.bend                    what must stay true
 PROOF.bend                   the proofs
