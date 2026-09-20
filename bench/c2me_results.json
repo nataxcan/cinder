@@ -1,0 +1,42 @@
+{
+  "c2me": "0.4.2-alpha.0.52+26.2",
+  "fabric_loader": "0.19.5",
+  "fabric_api": "0.161.0+26.2",
+  "lithium": "0.25.3+mc26.2",
+  "java": "25",
+  "target_chunks": 1024,
+  "samples": [
+    {
+      "done_ms": 13585.702523000009,
+      "pregen_ms": 8722.407680000004,
+      "total_ms": 22308.166619000018,
+      "chunks": 3364,
+      "target": 1024
+    },
+    {
+      "done_ms": 12992.701955,
+      "pregen_ms": 8618.619826999975,
+      "total_ms": 21611.399276999975,
+      "chunks": 3364,
+      "target": 1024
+    },
+    {
+      "done_ms": 13311.905079000042,
+      "pregen_ms": 8253.715618999991,
+      "total_ms": 21565.713560000007,
+      "chunks": 3364,
+      "target": 1024
+    }
+  ],
+  "median_done_ms": 13311.905079000042,
+  "median_pregen_ms": 8618.619826999975,
+  "median_total_ms": 21611.399276999975,
+  "cinder_best_ms": 21.4,
+  "cinder_median_4t_ms": 21.6,
+  "pumpkin_best_8t_ms": 4807.0,
+  "pumpkin_median_8t_ms": 5027.9,
+  "folia_median_pregen_ms": 11889.282471000002,
+  "folia_median_done_ms": 10658.78494399999,
+  "folia_median_total_ms": 23321.500000000015,
+  "best_pregen_ms": 8253.715618999991
+}

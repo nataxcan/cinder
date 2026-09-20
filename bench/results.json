@@ -1,0 +1,56 @@
+{
+  "host": {
+    "cpu": "AMD Ryzen 7 5700G with Radeon Graphics",
+    "nproc": 16,
+    "mem_kib": 49329784,
+    "gpu": "GPU 0: NVIDIA GeForce RTX 3090 (UUID: GPU-554b4296-7ed0-32be-9d79-919d56d67fe4)",
+    "os": "PRETTY_NAME=\"Ubuntu 22.04.5 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"22.04\"\nVERSION=\"22.04.5 LTS (Jammy Jellyfish)\"\nVERSION_CODENAME=jammy\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=jammy\n"
+  },
+  "servers": [
+    {
+      "name": "cinder",
+      "cmd": [
+        "/mnt/c/Users/nataxcan/Documents/dev/cinder/cinder",
+        "--threads",
+        "16"
+      ],
+      "binary_bytes": 1171616,
+      "ready_ms": 43.774167999913516,
+      "ready_ms_samples": [
+        44.39423300004819,
+        49.734739999962585,
+        42.915620000030685,
+        43.774167999913516,
+        35.48325700000987
+      ],
+      "ready_ms_best": 35.48325700000987,
+      "rss_kib": 8116,
+      "rss_after_kib": 8124,
+      "pid": 745,
+      "sequential": {
+        "n": 200,
+        "min_ms": 0.1192519999904107,
+        "p50_ms": 0.14789449994623283,
+        "p95_ms": 0.19232799991186766,
+        "p99_ms": 0.22537899997132627,
+        "max_ms": 0.3563579999763533,
+        "mean_ms": 0.15370860000302855
+      },
+      "motd": "{\"version\":{\"name\":\"Cinder 26.2\",\"protocol\":776},\"players\":{\"max\":2048,\"online\":0},\"description\":{\"text\":\"Cinder - GPU native Minecraft\"}}",
+      "concurrent": {
+        "ok": 400,
+        "err": 0,
+        "wall_s": 0.20636586900002385,
+        "qps": 1938.3050207781878,
+        "workers": 32,
+        "n": 400,
+        "min_ms": 2.5526270000000295,
+        "p50_ms": 13.338724499988075,
+        "p95_ms": 20.78496800004359,
+        "p99_ms": 23.61456700009512,
+        "max_ms": 30.94372200007456,
+        "mean_ms": 13.320305352498565
+      }
+    }
+  ]
+}

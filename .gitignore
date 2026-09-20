@@ -1,0 +1,43 @@
+# Build products
+cinder
+cinder.exe
+cinder.c
+cinder.js
+cinder.gpu
+cinder-bench
+cinder-bench.c
+cinder-bench.gpu
+gpu_bench
+gpu_bench.gpu
+*.o
+*.obj
+*.exe
+
+# Scratch and generated local state
+__pycache__/
+*.pyc
+.cache/
+/tmp/
+
+# Reference worlds and third-party server checkouts (large, reproducible)
+bench/pumpkin
+bench/pumpkin-run/
+bench/folia
+bench/c2me-run/
+bench/*.log
+ref*.json
+
+# Probe binaries and GPU build scratch
+bench/parity/*.class
+*.gpu
+
+# Local scratch: helpers pointing at a local decompiled source tree
+/.*.sh
+/.tags/
+/.trees.txt
+
+# One-shot edit scripts from development sessions
+bench/parity/_fix_*.py
+bench/parity/_patch*.py
+bench/parity/_insert_names.py
+bench/parity/_repair_names.py

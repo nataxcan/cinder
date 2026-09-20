@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cinder — GPU-native Minecraft server</title>
+  <meta name="description" content="Cinder is a Minecraft Java server written in Bend. Parallel worldgen on every core and the GPU. Proven packet codecs. No JVM." />
+  <style>
+    :root {
+      --bg: #0c0908;
+      --bg2: #16100d;
+      --ink: #f6ece4;
+      --muted: #b7a396;
+      --ember: #ff6a2a;
+      --ember2: #ffb347;
+      --line: #3a2a22;
+      --ok: #6ee7a8;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Segoe UI", ui-sans-serif, system-ui, sans-serif; }
+    a { color: var(--ember2); }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 8vw; border-bottom: 1px solid var(--line);
+    }
+    .brand { font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .brand span { color: var(--ember); }
+    nav a { margin-left: 22px; text-decoration: none; color: var(--muted); }
+    .hero { padding: 72px 8vw 48px; max-width: 1100px; }
+    .kicker { color: var(--ember); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: 12px; }
+    h1 { font-size: clamp(40px, 7vw, 76px); line-height: 0.95; margin: 12px 0 18px; }
+    .sub { font-size: 20px; color: var(--muted); max-width: 720px; }
+    .cta { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      background: linear-gradient(90deg, var(--ember), #ff8a3d);
+      color: #1a0d08; font-weight: 800; text-decoration: none;
+      padding: 12px 18px; border-radius: 8px;
+    }
+    .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 8vw 56px; max-width: 1100px; }
+    .stat { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+    .stat b { display: block; font-size: 28px; color: var(--ember2); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; padding: 0 8vw 64px; }
+    .card { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+    .card h3 { margin: 0 0 8px; }
+    .card p { margin: 0; color: var(--muted); }
+    table { width: min(1100px, 84vw); margin: 0 8vw 72px; border-collapse: collapse; }
+    th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); font-weight: 600; }
+    td.yes { color: var(--ok); }
+    footer { padding: 24px 8vw 48px; color: var(--muted); border-top: 1px solid var(--line); }
+    code { font-family: ui-monospace, Consolas, monospace; font-size: 0.92em; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">Cinder <span>MC</span></div>
+    <nav>
+      <a href="#why">Why</a>
+      <a href="#compare">Compare</a>
+      <a href="https://github.com/bendlang/bend">Bend</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="kicker">Written in Bend · compiled to C · runs on the GPU</div>
+    <h1>The Minecraft server that parallelizes itself.</h1>
+    <p class="sub">
+      Pumpkin rewrote vanilla in Rust. Cinder is the next step: a Java Edition 26.2
+      server whose worldgen is a pure divide-and-conquer heightmap, scheduled across
+      every CPU core and CUDA with no threads, locks, or kernels — and packet codecs
+      the compiler proves cannot lie.
+    </p>
+    <div class="cta">
+      <a class="btn" href="../README.md">Build from source</a>
+      <a class="btn ghost" href="https://github.com/bendlang/bend">Powered by Bend</a>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><b>~1.1&nbsp;MB</b> native binary, no JVM</div>
+    <div class="stat"><b>776</b> protocol · Minecraft 26.2</div>
+    <div class="stat"><b>GPU</b> heightmaps via <code>World.grid!</code></div>
+  </section>
+
+  <section class="grid" id="why">
+    <article class="card">
+      <h3>01 Instant process</h3>
+      <p>One clang-built ELF. No HotSpot warmup, no 1.8 GB heap, no <code>java -jar</code>.</p>
+    </article>
+    <article class="card">
+      <h3>02 Parallel worldgen</h3>
+      <p>A 16×16 heightmap is a balanced tree. Bend forks it over cores. <code>!</code> sends the same tree to the GPU.</p>
+    </article>
+    <article class="card">
+      <h3>03 Proven packets</h3>
+      <p><code>LAWS.bend</code> pins VarInt encodings. The checker refuses a commit that frames 776 as anything but <code>88 06</code>.</p>
+    </article>
+    <article class="card">
+      <h3>04 Affine, no GC</h3>
+      <p>Values have one owner. <code>match</code> frees the node it opens. Idle RAM stays in the process, not a collector.</p>
+    </article>
+    <article class="card">
+      <h3>05 Binary TCP</h3>
+      <p>Minecraft is not UTF-8. Cinder's foreign <code>Bytes.recv</code> / <code>Bytes.send</code> carry 0x00–0xFF intact.</p>
+    </article>
+    <article class="card">
+      <h3>06 MIT</h3>
+      <p>Read it, fork it, host it. More permissive than Pumpkin's GPL-3.0.</p>
+    </article>
+  </section>
+
+  <table id="compare">
+    <thead>
+      <tr><th>Feature</th><th>Cinder</th><th>Pumpkin</th><th>Vanilla / Paper</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Language</td><td>Bend → C / CUDA</td><td>Rust</td><td>Java</td></tr>
+      <tr><td>Runtime</td><td class="yes">No VM, no GC</td><td class="yes">No VM, no GC</td><td>JVM + GC pauses</td></tr>
+      <tr><td>Worldgen parallelism</td><td class="yes">CPU fork-join + GPU</td><td>Rayon / Tokio</td><td>Mostly main thread</td></tr>
+      <tr><td>Correctness</td><td class="yes">LAWS.bend proofs</td><td>Rust types</td><td>Tests + hope</td></tr>
+      <tr><td>Server list ping</td><td class="yes">26.2 / 776</td><td class="yes">Latest Java + Bedrock</td><td class="yes">Yes</td></tr>
+      <tr><td>Plugin API</td><td>Not yet</td><td>Native + PatchBukkit</td><td>Bukkit / Paper</td></tr>
+      <tr><td>License</td><td>MIT</td><td>GPL-3.0</td><td>Mojang EULA + GPL patches</td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    Cinder is early. Status ping is live; full simulation is next.
+    Built with <a href="https://bend-lang.com">Bend</a>.
+  </footer>
+</body>
+</html>

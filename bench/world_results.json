@@ -1,0 +1,97 @@
+{
+  "chunks": 1024,
+  "cinder": {
+    "1": {
+      "threads": 1,
+      "line": "Cinder world ready: chunks=1024 checksum=755513422 elapsed_units=96816",
+      "samples_ms": [
+        94596.944143,
+        96648.959934,
+        96820.70031399999
+      ],
+      "best_ms": 94596.944143,
+      "median_ms": 96648.959934
+    },
+    "4": {
+      "threads": 4,
+      "line": "Cinder world ready: chunks=1024 checksum=755513422 elapsed_units=27916",
+      "samples_ms": [
+        27939.659920999988,
+        28079.69449899997,
+        27919.777947999988
+      ],
+      "best_ms": 27919.777947999988,
+      "median_ms": 27939.659920999988
+    },
+    "8": {
+      "threads": 8,
+      "line": "Cinder world ready: chunks=1024 checksum=755513422 elapsed_units=17504",
+      "samples_ms": [
+        17391.51479000003,
+        17681.074672000024,
+        17509.199349000028
+      ],
+      "best_ms": 17391.51479000003,
+      "median_ms": 17509.199349000028
+    },
+    "16": {
+      "threads": 16,
+      "line": "Cinder world ready: chunks=1024 checksum=755513422 elapsed_units=14298",
+      "samples_ms": [
+        14705.127161000008,
+        14081.382693000023,
+        14304.103314999964
+      ],
+      "best_ms": 14081.382693000023,
+      "median_ms": 14304.103314999964
+    }
+  },
+  "pumpkin": {
+    "1": {
+      "threads": 1,
+      "grid": 32,
+      "line": "Pumpkin world ready: chunks=1024 grid=32x32 threads=1 elapsed_ms=23993.95",
+      "samples_ms": [
+        24140.52671999997
+      ],
+      "best_ms": 24140.52671999997,
+      "median_ms": 24140.52671999997
+    },
+    "4": {
+      "threads": 4,
+      "grid": 32,
+      "line": "Pumpkin world ready: chunks=1024 grid=32x32 threads=4 elapsed_ms=6831.16",
+      "samples_ms": [
+        7168.1442999999945,
+        7173.36740799999,
+        6962.482345000012
+      ],
+      "best_ms": 6962.482345000012,
+      "median_ms": 7168.1442999999945
+    },
+    "8": {
+      "threads": 8,
+      "grid": 32,
+      "line": "Pumpkin world ready: chunks=1024 grid=32x32 threads=8 elapsed_ms=5075.99",
+      "samples_ms": [
+        4822.537478999948,
+        4875.247986999966,
+        5221.155170999964
+      ],
+      "best_ms": 4822.537478999948,
+      "median_ms": 4875.247986999966
+    },
+    "16": {
+      "threads": 16,
+      "grid": 32,
+      "line": "Pumpkin world ready: chunks=1024 grid=32x32 threads=16 elapsed_ms=4686.28",
+      "samples_ms": [
+        5155.666645999986,
+        5100.06406499997,
+        4838.834975000054
+      ],
+      "best_ms": 4838.834975000054,
+      "median_ms": 5100.06406499997
+    }
+  }
+}

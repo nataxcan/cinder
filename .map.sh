@@ -1,0 +1,12 @@
+#!/bin/bash
+B=/mnt/c/Users/nataxcan/Documents/dev/mc-src-26.2/net/minecraft/world/level/block
+cd "$B" || exit 1
+echo "=== class of each BlockIds name"
+for n in MOSS_CARPET DEAD_BUSH SHORT_GRASS FERN TALL_GRASS LARGE_FERN SUNFLOWER LILAC ROSE_BUSH PEONY BUSH FIREFLY_BUSH SHORT_DRY_GRASS TALL_DRY_GRASS SWEET_BERRY_BUSH LEAF_LITTER PINK_PETALS WILDFLOWERS SPORE_BLOSSOM HANGING_ROOTS LILY_PAD PUMPKIN MELON BROWN_MUSHROOM RED_MUSHROOM CRIMSON_ROOTS FIRE SOUL_FIRE WHITE_TULIP CLOSED_EYEBLOSSOM BIG_DRIPLEAF BIG_DRIPLEAF_STEM SMALL_DRIPLEAF PALE_MOSS_CARPET PALE_HANGING_MOSS GLOW_LICHEN SCULK_VEIN VINE CAVE_VINES CAVE_VINES_PLANT KELP KELP_PLANT SEAGRASS TALL_SEAGRASS SEA_PICKLE BAMBOO SUGAR_CANE CACTUS COCOA BEE_NEST MANGROVE_ROOTS MANGROVE_PROPAGULE AZALEA FLOWERING_AZALEA MOSS_BLOCK PALE_MOSS_BLOCK ROOTED_DIRT SNOW ICE; do
+  line=$(grep -A 3 "BlockIds.$n = register" Blocks.java 2>/dev/null | head -4 | tr '\n' ' ')
+  echo "$n :: $line"
+done
+echo "=== CarpetBlock"
+awk '/protected boolean canSurvive/,/^   }/' CarpetBlock.java 2>/dev/null
+echo "=== DeadBushBlock"
+[ -f DeadBushBlock.java ] && awk '/class |mayPlaceOn|canSurvive/,/^   }/' DeadBushBlock.java | head -20

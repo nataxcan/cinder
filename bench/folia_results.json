@@ -1,0 +1,35 @@
+{
+  "folia": "26.2-7",
+  "java": "25.0.4.1",
+  "target_chunks": 1024,
+  "samples": [
+    {
+      "done_ms": 10491.848211000048,
+      "pregen_ms": 10353.401479000013,
+      "total_ms": 20845.322385000032,
+      "chunks": 3683,
+      "target": 1024
+    },
+    {
+      "done_ms": 11432.126390000009,
+      "pregen_ms": 11889.282471000002,
+      "total_ms": 23321.500000000015,
+      "chunks": 3364,
+      "target": 1024
+    },
+    {
+      "done_ms": 10658.78494399999,
+      "pregen_ms": 13288.177529999984,
+      "total_ms": 23947.02010300011,
+      "chunks": 3364,
+      "target": 1024
+    }
+  ],
+  "median_done_ms": 10658.78494399999,
+  "median_pregen_ms": 11889.282471000002,
+  "median_total_ms": 23321.500000000015,
+  "cinder_best_ms": 21.4,
+  "cinder_median_4t_ms": 21.6,
+  "pumpkin_best_8t_ms": 4807.0,
+  "pumpkin_median_8t_ms": 5027.9
+}
