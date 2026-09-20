@@ -5,10 +5,17 @@
 # credential helper, so the token never appears in the remote URL, in argv, or in
 # .git/config.
 set -euo pipefail
-cd "$(dirname "$0")/../.."
+cd "$(dirname "$0")/.."          # this script lives in <repo>/scripts
+REPO_ROOT="$PWD"
 
 REPO="${REPO:-https://github.com/nataxcan/cinder.git}"
 TOKEN_FILE="$HOME/.config/gh/hosts.yml"
+
+# guard: this must be the cinder checkout, not whatever directory the caller was in
+[ -f "$REPO_ROOT/AGENTS.md" ] && [ -d "$REPO_ROOT/src" ] || {
+  echo "publish.sh: $REPO_ROOT does not look like the cinder checkout" >&2
+  exit 1
+}
 
 if [ ! -d .git ]; then
   git init -q -b main
@@ -17,10 +24,12 @@ if [ ! -d .git ]; then
 fi
 
 git add -A
-echo "== staged ($(git diff --cached --numstat | wc -l) files, $(git diff --cached --numstat | awk '{a+=$1} END {print a+0}') lines added)"
-git diff --cached --stat | tail -3
+echo "== staged: $(git diff --cached --name-only | wc -l) files in $REPO_ROOT"
+git diff --cached --stat | tail -1
 
-git commit -q -m "${MSG:-Cinder: vanilla 26.2 worldgen in Bend, with parity and bench tooling}" || echo "(nothing to commit)"
+if ! git diff --cached --quiet; then
+  git commit -q -m "${MSG:-Update}"
+fi
 
 if [ ! -f "$TOKEN_FILE" ]; then
   echo "no $TOKEN_FILE; push manually with your own credentials" >&2
@@ -38,5 +47,5 @@ git remote remove origin 2>/dev/null || true
 git remote add origin "$REPO"
 git -c credential.helper= \
     -c "credential.helper=!f() { echo username=x-access-token; echo password=$TOKEN; }; f" \
-    push -u origin main
-echo "pushed to $REPO"
+    push -u origin main "$@"
+echo "pushed $(git rev-parse --short HEAD) to $REPO"
